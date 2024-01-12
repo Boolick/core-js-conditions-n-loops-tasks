@@ -167,22 +167,39 @@ function convertNumberToString(numberStr) {
 
   let result = '';
   let isNegative = false;
-  let startIndex = 0;
+  let i = 0;
 
   if (numberStr[0] === '-') {
     isNegative = true;
-    startIndex = 1;
+    i = 1;
   }
 
-  for (let i = startIndex; i < numberStr.length; i += 1) {
+  while (i < numberStr.length) {
     const char = numberStr[i];
-    const word = wordsMap[char];
-    if (word) {
-      result += (i === startIndex ? '' : ' ') + word;
-    } else {
-      result += (i === startIndex ? '' : ' ') + char;
+
+    switch (char) {
+      case '0':
+      case '1':
+      case '2':
+      case '3':
+      case '4':
+      case '5':
+      case '6':
+      case '7':
+      case '8':
+      case '9':
+      case '.':
+      case ',':
+        result += (i === (isNegative ? 1 : 0) ? '' : ' ') + wordsMap[char];
+        break;
+      default:
+        result += (i === (isNegative ? 1 : 0) ? '' : ' ') + char;
+        break;
     }
+
+    i += 1;
   }
+
   if (isNegative) {
     result = `minus ${result}`;
   }
